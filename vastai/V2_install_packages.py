@@ -41,3 +41,13 @@ if all_ok:
     print("✅ All packages installed successfully")
 else:
     print("⚠️  Some packages failed — check errors above")
+
+# -------------------------------------------------------
+# NumPy 2.0 compatibility patch for imagecorruptions fog
+# Must run after numpy is installed above
+# -------------------------------------------------------
+import numpy as np
+np.float_   = np.float64
+np.int_     = np.int64
+np.complex_ = np.complex128
+print("✅ NumPy 2.0 aliases patched for imagecorruptions")
