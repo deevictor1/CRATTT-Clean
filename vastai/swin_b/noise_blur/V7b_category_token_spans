@@ -1,0 +1,73 @@
+# ============================================================
+# BLOCK V7b: Category Token Spans + Patched Detection Function
+# Source: crattt-clean-2.ipynb, cells 9 and 12 (corrected)
+# Not present in the original tiny-model Vast.ai sweep.
+# Replaces post_process_grounded_object_detection, which
+# silently drops detections on composite phrases like
+# "chair couch". Uses per-category argmax over token spans.
+# ============================================================
+category_order = list(COCO_MAP.keys())
+
+tokenizer = dino_processor.tokenizer
+tok_with_offsets = tokenizer(DINO_TEXT_PROMPT, return_offsets_mapping=True, add_special_tokens=True, return_tensors=None)
+offsets       = tok_with_offsets["offset_mapping"]
+token_ids_ref = tok_with_offsets["input_ids"]
+
+_sanity_inputs = dino_processor(images=loaded_images[image_files[0]], text=DINO_TEXT_PROMPT, return_tensors="pt").to(device)
+if token_ids_ref != _sanity_inputs.input_ids[0].cpu().tolist():
+    raise RuntimeError("Tokenization mismatch, stop and investigate before proceeding.")
+print(f"✅ Tokenization confirmed identical to model inputs ({len(token_ids_ref)} tokens)")
+
+def build_category_token_spans(text_prompt, category_names, offsets):
+    spans, not_found, search_start = {}, [], 0
+    for cat in category_names:
+        idx = text_prompt.find(cat, search_start)
+        if idx == -1:
+            idx = text_prompt.lower().find(cat.lower(), search_start)
+        if idx == -1:
+            spans[cat] = []
+            not_found.append(cat)
+            continue
+        start_char, end_char = idx, idx + len(cat)
+        search_start = end_char
+        spans[cat] = [i for i, (s, e) in enumerate(offsets) if not (s == 0 and e == 0) and s < end_char and e > start_char]
+    return spans, not_found
+
+category_token_spans, not_found = build_category_token_spans(DINO_TEXT_PROMPT, category_order, offsets)
+print(f"✅ Token spans built for {len(category_order) - len(not_found)}/{len(category_order)} categories")
+if not_found:
+    print(f"⚠️  NOT FOUND: {not_found}")
+
+def get_category_distribution(outputs, category_token_spans, category_order):
+    logits = outputs.logits[0]
+    scores_sigmoid = logits.sigmoid()
+    cols = []
+    for cat in category_order:
+        tids = category_token_spans.get(cat, [])
+        cols.append(torch.zeros(scores_sigmoid.shape[0], device=scores_sigmoid.device) if not tids else scores_sigmoid[:, tids].max(dim=-1).values)
+    cat_scores_raw = torch.stack(cols, dim=-1)
+    return cat_scores_raw, torch.softmax(cat_scores_raw, dim=-1)
+
+def run_dino_with_categories(image_np, box_threshold=None):
+    if box_threshold is None:
+        box_threshold = BOX_THRESHOLD
+    dino_model.eval()
+    with torch.no_grad():
+        inputs = dino_processor(images=image_np, text=DINO_TEXT_PROMPT, return_tensors="pt").to(device)
+        outputs = dino_model(**inputs)
+    cat_scores_raw, _ = get_category_distribution(outputs, category_token_spans, category_order)
+    max_raw_scores, max_cat_idx = cat_scores_raw.max(dim=-1)
+    keep_indices = (max_raw_scores >= box_threshold).nonzero(as_tuple=True)[0]
+    if len(keep_indices) == 0:
+        return [], [], []
+    img_h, img_w = image_np.shape[:2]
+    pred_cxcywh = outputs.pred_boxes[0]
+    cx, cy = pred_cxcywh[:,0]*img_w, pred_cxcywh[:,1]*img_h
+    pw, ph = pred_cxcywh[:,2]*img_w, pred_cxcywh[:,3]*img_h
+    pred_xyxy = torch.stack([cx-pw/2, cy-ph/2, cx+pw/2, cy+ph/2], dim=-1)
+    boxes  = pred_xyxy[keep_indices]
+    scores = max_raw_scores[keep_indices]
+    labels = [category_order[i] for i in max_cat_idx[keep_indices].tolist()]
+    return boxes, scores, labels
+
+print("✅ run_dino_with_categories ready (box_threshold=0.25)")
