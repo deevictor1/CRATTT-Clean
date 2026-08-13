@@ -33,7 +33,7 @@ DINO_TEXT_PROMPT = None
 
 if MODEL == "dino":
     print("\nLoading GroundingDINO-tiny...")
-    DINO_MODEL_ID = "IDEA-Research/grounding-dino-tiny"
+    DINO_MODEL_ID = "IDEA-Research/grounding-dino-base"
     DINO_TEXT_PROMPT = (
         "person . bicycle . car . motorcycle . airplane . bus . "
         "train . truck . boat . traffic light . fire hydrant . "
