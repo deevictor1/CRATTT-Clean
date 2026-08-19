@@ -131,6 +131,18 @@ pivot["gap"] = pivot["verified_precision"] - pivot["rejected_precision"]
 print(pivot.round(3))
 
 print()
+print("=" * 65)
+print("SAMPLE-SIZE DIAGNOSTIC")
+print("=" * 65)
+print("Total detections per cell:")
+print(df_strat.groupby(["severity", "corruption"]).size().unstack())
+print()
+print("Verified-detection count per cell (this is what each gap is actually based on):")
+vcounts = df_strat.groupby(["severity", "corruption", "verified"]).size().unstack(fill_value=0)
+vcounts.columns = ["rejected_n", "verified_n"]
+print(vcounts)
+
+print()
 print("✅ Saved: table_stratified_reliability.csv")
 
 print()
