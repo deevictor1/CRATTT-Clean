@@ -1,6 +1,5 @@
 # ============================================================
 # BLOCK 24f: Detection Loss TTT — Diagnostic at N=10
-# Dada Victor Damilare | MRES7015 | University of Greater Manchester
 # ============================================================
 #
 # WHY THIS BLOCK EXISTS
