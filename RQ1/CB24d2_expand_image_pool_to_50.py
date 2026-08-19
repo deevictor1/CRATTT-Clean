@@ -43,6 +43,12 @@ checks = {
     "b24_run_dino":                    'b24_run_dino' in dir(),
     "reset_lora_b":                    'reset_lora_b' in dir(),
     "apply_corruption_deterministic":  'apply_corruption_deterministic' in dir(),
+    "compute_map":                     'compute_map' in dir(),
+    "coco_gt":                         'coco_gt' in dir(),
+    "COCO_MAP":                        'COCO_MAP' in dir(),
+    "device":                          'device' in dir(),
+    "loaded_images":                   'loaded_images' in dir(),
+    "img_id_map":                      'img_id_map' in dir(),
     "image_files >= 50":               'image_files' in dir() and len(image_files) >= 50,
 }
 all_ok = True
