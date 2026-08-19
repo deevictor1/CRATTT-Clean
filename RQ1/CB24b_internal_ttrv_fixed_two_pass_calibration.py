@@ -1,7 +1,6 @@
 # ============================================================
 # BLOCK 24b: INTERNAL TTRV — Fixed Two-Pass Calibration
 # + PER-IMAGE EPISODIC RESET FIX
-# Dada Victor Damilare | MRES7015 | University of Greater Manchester
 # ============================================================
 #
 # WHY THIS BLOCK EXISTS
