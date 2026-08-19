@@ -1,6 +1,5 @@
 # ============================================================
 # BLOCK 24: INTERNAL TTRV — Score-SNR Gated TTT
-# Dada Victor Damilare | MRES7015 | University of Greater Manchester
 # ============================================================
 #
 # FIXES APPLIED (this version):
