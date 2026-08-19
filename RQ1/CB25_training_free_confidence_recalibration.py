@@ -1,7 +1,6 @@
 # ============================================================
 # BLOCK 25: Training-Free Confidence Recalibration via Online
 # Memory of Attribute-Level Vulnerability (Table 4.12)
-# Dada Victor Damilare | MRES7015 | University of Greater Manchester
 # GroundingDINO-base (Swin-B backbone)
 # ============================================================
 #
