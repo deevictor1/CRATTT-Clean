@@ -1,7 +1,6 @@
 # ============================================================
 # BLOCK 24d (fix): SEVERITY SWEEP — N=20, Severities 1, 3, 5
 # (Episodic Reset + Seeded Corruption + Fallback-to-Baseline Fix)
-# Dada Victor Damilare | MRES7015 | University of Greater Manchester
 # ============================================================
 #
 # PURPOSE
