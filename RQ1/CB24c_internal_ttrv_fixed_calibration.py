@@ -1,7 +1,6 @@
 # ============================================================
 # BLOCK 24c: INTERNAL TTRV — Fixed Calibration + Episodic Reset
 #            + DETERMINISTIC CORRUPTION SEEDING
-# Dada Victor Damilare | MRES7015 | University of Greater Manchester
 # ============================================================
 #
 # WHY THIS BLOCK EXISTS
