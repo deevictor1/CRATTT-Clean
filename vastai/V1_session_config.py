@@ -17,19 +17,22 @@ N_IMAGES    = 5000              # Keep at 5000 for all sessions
 # --- DO NOT CHANGE BELOW THIS LINE ---
 SEED           = 42
 DINO_TEXT_THR  = 0.12
+BOX_THRESHOLD  = 0.25
 YOLO_CONF_THR  = 0.12
 TAU            = 0.335
 ALPHA          = 0.4
 BETA           = 0.6
-CLEAN_MAP_DINO = 0.3598  # From Kaggle Block 5
-CLEAN_MAP_YOLO = 0.5221  # From Kaggle Block 5
+CLEAN_MAP_DINO = 0.5281  # Verified dissertation baseline (Table 4.1/4.2a)
+CLEAN_MAP_YOLO = 0.4327  # Verified dissertation baseline (Table 4.1/4.2a)
+
+DINO_MODEL_ID  = "IDEA-Research/grounding-dino-base"
 
 RUN_NAME = f"{MODEL}_{CORRUPTIONS.replace('+', '_')}"
 
 print("=" * 55)
 print("SESSION CONFIGURATION")
 print("=" * 55)
-print(f"Model           : {MODEL.upper()}")
+print(f"Model           : {MODEL.upper()} (Swin-B)")
 print(f"Corruptions     : {CORRUPTIONS}")
 print(f"Images          : {N_IMAGES}")
 print(f"Run name        : {RUN_NAME}")
