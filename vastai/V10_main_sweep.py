@@ -76,21 +76,8 @@ for cat_name, corruption in THIS_RUN:
 
             try:
                 if MODEL == "dino":
-                    with torch.no_grad():
-                        inputs = dino_processor(
-                            images=c_img,
-                            text=DINO_TEXT_PROMPT,
-                            return_tensors="pt"
-                        ).to(device)
-                        outputs = dino_model(**inputs)
-                        res = dino_processor\
-                            .post_process_grounded_object_detection(
-                                outputs,
-                                inputs.input_ids,
-                                target_sizes=[c_img.shape[:2]],
-                                text_threshold=DINO_TEXT_THR
-                            )[0]
-                    preds = dino_to_coco_format(res, img_id)
+                    boxes, scores, labels = run_dino_with_categories(c_img)
+                    preds = dino_to_coco_format_patched(boxes, scores, labels, img_id)
 
                 elif MODEL == "yolo":
                     import cv2
