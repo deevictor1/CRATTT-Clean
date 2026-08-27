@@ -14,8 +14,8 @@ BOX_THRESHOLD  = 0.25
 TAU            = 0.335
 ALPHA          = 0.4
 BETA           = 0.6
-CLEAN_MAP_DINO = 0.5461
-CLEAN_MAP_YOLO = 0.5221
+CLEAN_MAP_DINO = 0.5281  # corrected from 0.5461, matches dissertation Table 4.1/4.2a
+CLEAN_MAP_YOLO = 0.4327  # corrected from 0.5221, matches dissertation Table 4.1/4.2a
 
 DINO_MODEL_ID  = "IDEA-Research/grounding-dino-base"
 
