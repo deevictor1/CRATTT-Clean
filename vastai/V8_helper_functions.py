@@ -42,6 +42,16 @@ def dino_to_coco_format(res, img_id):
         })
     return preds
 
+def dino_to_coco_format_patched(boxes, scores, labels, img_id):
+    preds = []
+    for box, score, label in zip(boxes, scores, labels):
+        cat_id = COCO_MAP.get(label)
+        if cat_id is None:
+            continue
+        b = box.tolist()
+        preds.append({"image_id": img_id, "category_id": cat_id,
+                      "bbox": [b[0], b[1], b[2]-b[0], b[3]-b[1]], "score": float(score)})
+    return preds
 
 def yolo_to_coco_format(results, img_id):
     preds = []
