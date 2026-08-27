@@ -32,8 +32,7 @@ yolo_model     = None
 DINO_TEXT_PROMPT = None
 
 if MODEL == "dino":
-    print("\nLoading GroundingDINO-tiny...")
-    DINO_MODEL_ID = "IDEA-Research/grounding-dino-tiny"
+    print("\nLoading GroundingDINO-base (Swin-B)...")
     DINO_TEXT_PROMPT = (
         "person . bicycle . car . motorcycle . airplane . bus . "
         "train . truck . boat . traffic light . fire hydrant . "
@@ -60,7 +59,7 @@ if MODEL == "dino":
     dino_params = sum(
         p.numel() for p in dino_model.parameters()
     )
-    print(f"✅ GroundingDINO-tiny: {dino_params:,} params")
+    print(f"✅ GroundingDINO-base (Swin-B): {dino_params:,} params")
 
 elif MODEL == "yolo":
     print("\nLoading YOLO-World-large...")
