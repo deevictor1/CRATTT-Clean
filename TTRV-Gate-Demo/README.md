@@ -33,7 +33,7 @@ imply a validated behaviour that doesn't exist.
 
 ## Running it
 
-This is a single, self-contained script (`ttrv_gate_demo.py`). It runs
+This is a single, self-contained script (`standalone-gate.py`). It runs
 on Kaggle (as originally developed) or in any environment with GPU
 access and the listed dependencies (`transformers`, `torch`,
 `torchvision`, `imagecorruptions`, `gradio`, `Pillow`). It does not
@@ -43,7 +43,7 @@ since GroundingDINO-base is a public model.
 
 ```
 pip install imagecorruptions gradio
-python ttrv_gate_demo.py
+python standalone-gate.py
 ```
 
 Launches a Gradio interface with a public share link
