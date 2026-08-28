@@ -3,7 +3,7 @@ Clean implementation of CRATTT framework - MRES7015 Dissertation
 
 ===================================================================================================
 
-# RQ1 - Code Archive
+# RQs - Code Archive
 
 This folder contains the working code behind the dissertation's investigation into
 whether reasoning-aware verification (TTRV) can enable safe test-time adaptation for
@@ -155,9 +155,25 @@ interactive Gradio demo of the gate itself.
 | `CB32_patch_and_preflight_check.py` | Patch reapplication + Gradio demo pre-flight |
 | `CB33_ttrv_trust_routing_demo.py` | Interactive Gradio demo of the validated TTRV gate |
 
+## 7. Phases 7-8 - Addressing RQ2 and RQ3 (CB34-CB35)
+
+Builds directly on the shared experimental infrastructure established in Phases
+1-6 to answer the dissertation's two remaining research questions. Phase 7
+compares a structured, CLIP-based verification proxy against a simple entropy
+baseline under both severe and gentle corruption. Phase 8 measures the
+practical cost of test-time adaptation itself, timing LoRA-based updates at
+two adapter capacities against an attempted full fine-tune, producing
+Table 4.17.
+
+| File | What it does |
+|---|---|
+| `CB34_rq2_diagnostic.py` | Structured proxy (CLIP category-vs-background margin) vs. entropy baseline, tested under motion-blur severity 5 and contrast severity 1 |
+| `CB35_rq3_diagnostic.py` | LoRA rank=4 vs. rank=16 vs. full fine-tune timing comparison -- Table 4.17 |
+
 ---
 
 ## Where the key numbers come from
+
 
 - **Table 4.2 (robustness)**: `CB6` + `CB7`
 - **Tables 4.3–4.6 (external-oracle TTRV)**: `CB11`–`CB13`
@@ -167,3 +183,4 @@ interactive Gradio demo of the gate itself.
 - **Table 4.11 (detection-loss diagnostic)**: `CB24f`
 - **Table 4.12 (online-memory recalibration)**: `CB25`
 - **TTRV reliability classifier finding (verified vs. rejected precision)**: `CB27`, `CB28`
+- **Table 4.17 (adaptation speed, LoRA vs. full fine-tune)**: `CB35`
