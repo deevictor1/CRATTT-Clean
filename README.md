@@ -1,6 +1,6 @@
 # CRATTT-Clean
 
-Clean implementation of the CRATTT framework — MRES7015 Dissertation.
+Clean implementation of the CRATTT framework - MRES7015 Dissertation.
 
 This repository is organised into five folders, each independently
 runnable and independently documented. This page is a short map between
